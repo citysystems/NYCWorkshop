@@ -1,0 +1,206 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Accessibility: East Palo Alto</title>
+  <meta name="description" content="EPA Access">
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+  crossorigin=""/>
+  <link rel="stylesheet" href="css/styles.css" type="text/css">
+</head>
+
+<body>
+  <!-- HEADER -->
+  <nav id='headerNav' class="navbar navbar-light" style="background-color: rgba(75, 175, 119,
+  1); color:"#ffffff">
+    <h3><a style='font-size: 30px' id='header' class="navbar-brand" href='index.html'>EPA Accessibility</a></h3>
+  </nav>
+
+  <div id="body">
+    <div class='container-fluid'>
+      <div class="row">
+        <div class="col-md-6" style="padding:20px; width:100%;">
+          <h4>Accessibility Weighting</h4>
+          <button style='text-align: center; min-width:170px;' type="submit" class="btn btn-primary mb-2" onclick="presetFilter()">South Stockton Preset</button>
+          <div class="row">
+            <div class="col-md-4" style="padding:0px; width:100%;">
+              Goods & Services
+            </div>
+            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="Weighting for amenity importance: higher values, higher importance">
+              Absolute Value
+            </div>
+            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="How many of this amenity would you want in your neighborhood? Choose between 1 and 10.">
+              Marginal Value
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              Store
+            </div>
+            <div class="col-md-4">
+              <input id="storeVal" type='number' class="form-control bfh-number" name="storeVal" data-min=0 data-max=10 min=0 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
+            </div>
+            <div class="col-md-4">
+              <input id="storeMVal" type='number' class="form-control bfh-number" name="storeMVal" data-min=0 data-max=1 min=0 max=1 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              Pharmacy
+            </div>
+            <div class="col-md-4">
+              <input id="pharmaVal" type='number' class="form-control bfh-number" name="pharmaVal" data-min=0 data-max=10 min=0 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
+            </div>
+            <div class="col-md-4">
+              <input id="pharmaMVal" type='number' class="form-control bfh-number" name="pharmaMVal" data-min=0 data-max=1 min=0 max=1 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              Bank
+            </div>
+            <div class="col-md-4">
+              <input id="bankVal" type='number' class="form-control bfh-number" name="bankVal" data-min=0 data-max=10 min=0 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
+            </div>
+            <div class="col-md-4">
+              <input id="bankMVal" type='number' class="form-control bfh-number" name="bankMVal" data-min=0 data-max=1 min=0 max=1 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              Supermarket
+            </div>
+            <div class="col-md-4">
+              <input id="supermarketVal" type='number' class="form-control bfh-number" name="supermarketVal" data-min=0 data-max=10 min=0 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
+            </div>
+            <div class="col-md-4">
+              <input id="supermarketMVal" type='number' class="form-control bfh-number" name="supermarketMVal" data-min=0 data-max=1 min=0 max=1 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              Restaurant
+            </div>
+            <div class="col-md-4">
+              <input id="restaurantVal" type='number' class="form-control bfh-number" name="restaurantVal" data-min=0 data-max=10 min=0 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
+            </div>
+            <div class="col-md-4">
+              <input id="restaurantMVal" type='number' class="form-control bfh-number" name="restaurantMVal" data-min=0 data-max=1 min=0 max=1 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 1">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-4">
+              Transit Modes
+            </div>
+            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="Weighting for transportation mode importance: higher values for modes of transportation that are more important or desired">
+              Absolute Value
+            </div>
+            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="Weighting for importance of each extra minute: higher values are for modes where an extra minute is more inconvenient">
+              Max Time Scalar
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              Walk
+            </div>
+            <div class="col-md-4">
+              <input id="walkVal" type='number' class="form-control bfh-number" name="walkVal" data-min=0 data-max=10 min=0 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
+            </div>
+            <div class="col-md-4">
+              <input id="walkMVal" type='number' class="form-control bfh-number" name="walkMVal" data-min=0 data-max=30 min=0 max=30 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 1 to 30: the max number of minutes you'd be willing to take to get to your destination.">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              Bike
+            </div>
+            <div class="col-md-4">
+              <input id="bikeVal" type='number' class="form-control bfh-number" name="bikeVal" data-min=0 data-max=10 min=0 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
+            </div>
+            <div class="col-md-4">
+              <input id="bikeMVal" type='number' class="form-control bfh-number" name="bikeMVal" data-min=0 data-max=1 min=0 max=1 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              Transit
+            </div>
+            <div class="col-md-4">
+              <input id="transitVal" type='number' class="form-control bfh-number" name="transitVal" data-min=0 data-max=10 min=0 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
+            </div>
+            <div class="col-md-4">
+              <input id="transitMVal" type='number' class="form-control bfh-number" name="transitMVal" data-min=0 data-max=1 min=0 max=1 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              Drive
+            </div>
+            <div class="col-md-4">
+              <input id="driveVal" type='number' class="form-control bfh-number" name="driveVal" data-min=0 data-max=10 min=0 max=10 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
+            </div>
+            <div class="col-md-4">
+              <input id="driveMVal" type='number' class="form-control bfh-number" name="driveMVal" data-min=0 data-max=1 min=0 max=1 value=0 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 1">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" style="padding:0;width:100%">
+          <div id='my-map'></div>
+        </div>
+      </div>
+      <div class='row' >
+        <div class="col-xs-6 col-md-12" style="padding:0; width:100%;">
+          <div>
+          Maybe some logos that act as hyperlinks here?
+          (City Systems/ Stockton Promise Zone/Other Partners)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="creditsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">About this project</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          City Systems bio, credits to us + to our partners</a>.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script
+  src="//code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+    integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+    crossorigin=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js"></script>
+  <script src='js/parcels.js'></script>
+  <script src='js/distances.js'></script>
+  <script src='js/amenities.js'></script>
+  <script src="js/scripts.js"></script>
+</body>
+
+</html>
