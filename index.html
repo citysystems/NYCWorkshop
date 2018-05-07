@@ -32,22 +32,22 @@
             <div class="col-md-4" style="padding:0px; width:100%;">
               <b>Goods & Services</b>
             </div>
-            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="Weighting for amenity importance: higher values, higher importance">
-              <b>Absolute Value</b>
+            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="Value: Value of the destination type. 10 is ten times as valuable as 1">
+              <b>Absolute Good</b>
             </div>
-            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="How many of this amenity would you want in your neighborhood? Choose between 1 and 10.">
-              <b>Marginal Value</b>
+            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="Density: Number of each type you would like in your neighborhood">
+              <b>Marginal Good</b>
             </div>
           </div>
           <div class="row">
             <div class="col-md-4">
-              Store
+              Bank
             </div>
             <div class="col-md-4">
-              <input id="storeVal" type='number' class="form-control bfh-number" name="storeVal" data-min=0 data-max=10 min=0 max=10 value=3 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
+              <input id="bankVal" type='number' class="form-control bfh-number" name="bankVal" data-min=0 data-max=10 min=0 max=10 value=2 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
             </div>
             <div class="col-md-4">
-              <input id="storeMVal" type='number' class="form-control bfh-number" name="storeMVal" data-min=1 data-max=10 min=1 max=10 value=2 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 1 to 10">
+              <input id="bankMVal" type='number' class="form-control bfh-number" name="bankMVal" data-min=1 data-max=10 min=1 max=10 value=2 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 1 to 10">
             </div>
           </div>
           <div class="row">
@@ -63,13 +63,13 @@
           </div>
           <div class="row">
             <div class="col-md-4">
-              Bank
+              Store
             </div>
             <div class="col-md-4">
-              <input id="bankVal" type='number' class="form-control bfh-number" name="bankVal" data-min=0 data-max=10 min=0 max=10 value=2 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
+              <input id="storeVal" type='number' class="form-control bfh-number" name="storeVal" data-min=0 data-max=10 min=0 max=10 value=3 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 0 to 10">
             </div>
             <div class="col-md-4">
-              <input id="bankMVal" type='number' class="form-control bfh-number" name="bankMVal" data-min=1 data-max=10 min=1 max=10 value=2 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 1 to 10">
+              <input id="storeMVal" type='number' class="form-control bfh-number" name="storeMVal" data-min=1 data-max=10 min=1 max=10 value=2 oninput='updateMap()' data-toggle="tooltip" data-placement="top" title="Input number from 1 to 10">
             </div>
           </div>
           <div class="row">
@@ -99,11 +99,11 @@
             <div class="col-md-4">
               <b>Transit Modes</b>
             </div>
-            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="Weighting for transportation mode importance: higher values for modes of transportation that are more important or desired">
-              <b>Absolute Value</b>
+            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="Value: Value of the travel mode. 10 is ten times as valuable as 1">
+              <b>Absolute Mode</b>
             </div>
-            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="Weighting for importance of each extra minute: higher values are for modes where an extra minute is more inconvenient">
-              <b>Max Time Scalar</b>
+            <div class="col-md-4" style="padding:0px; width:100%;" data-toggle="tooltip" data-placement="top" title="Reasonable Length: How long you'd be reasonably willing to travel in minutes">
+              <b>Marginal Mode</b>
             </div>
           </div>
           <div class="row">
