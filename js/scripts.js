@@ -94,10 +94,10 @@ function onEachFeature(feature, layer) {
   //marginal transit calc: -ln0.1/t(minutes)
   var marginalTransitW = [((Math.log(0.1))/($("#walkMVal").val())), ((Math.log(0.1))/($("#bikeMVal").val())), ((Math.log(0.1))/($("#transitMVal").val())),
   ((Math.log(0.1))/($("#transitMVal").val()))];
-  console.log(absoluteAmenW);
-  console.log(marginalAmenW);
-  console.log(absoluteTransitW);
-  console.log(marginalTransitW);
+  // console.log(absoluteAmenW);
+  // console.log(marginalAmenW);
+  // console.log(absoluteTransitW);
+  // console.log(marginalTransitW);
   parcel = layer.feature.properties.ID;
   score = 0;
   //marginal good implementation = total transit score * MarginalAmenW(given type)^"rank"
@@ -210,7 +210,8 @@ function onEachFeature(feature, layer) {
   };
   if (score < minScore) {
     minScore = score;
-  }
+  };
+  scores.push(score);
 };
 
 var store = L.geoJson(amenities, {
@@ -296,9 +297,9 @@ function getColor(d) {
 legend.onAdd = function(map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0,1,9,19,40],
-        labels = ['Less than 1', "1-5", '5-10',
-        '10-20', '20+'];
+        grades = [221,205,173,157,155],
+        labels = ['2 std > mean', "1-2 std > mean", '1 std from mean',
+        '1-2 std < mean', '2 std < mean'];
     div.innerHTML = '<div><b>Accessibility Score</b></div>';
 
     // loop through our density intervals and generate a label with a colored square for each interval
@@ -350,9 +351,37 @@ var filteredLayer = L.geoJSON(parcels, {
   onEachFeature: onEachFeature,
 });
 
+function average(data){
+  var sum = data.reduce(function(sum, value){
+    return sum + value;
+  }, 0);
+
+  var avg = sum / data.length;
+  return avg;
+};
+
+function standardDeviation(values){
+  var sum = values.reduce(function(sum, value){
+    return sum + value;
+  }, 0);
+  var avg = sum / values.length;
+  var squareDiffs = values.map(function(value){
+    var diff = value - avg;
+    var sqrDiff = diff * diff;
+    return sqrDiff;
+  });
+  var sum = squareDiffs.reduce(function(sum, value){
+    return sum + value;
+  }, 0);
+  var avg = sum / squareDiffs.length;
+  var stdDev = Math.sqrt(avg);
+  return stdDev;
+};
+
 function updateMap() {
   maxScore = 0;
   minScore = 0;
+  scores = [];
   var features = parcels.features
   var FC = {
     type: 'FeatureCollection',
@@ -363,14 +392,34 @@ function updateMap() {
   filteredLayer = L.geoJSON(FC, {
     onEachFeature: onEachFeature,
   });
-  // steps = (maxScore - minScore)/5
-  // function getColor(d) {
-  //   return d < minScore + steps ? '#4FDE02' :
-  //       d < minScore + 2*steps ? '#A0EB15' :
-  //       d < minScore + 3*steps ? '#E9D00E' :
-  //       d < minScore + 4*steps ? '#E76607' :
-  //       '#EC0803';
-  // };
+  var sum = scores.reduce(function(sum, value){
+    return sum + value;
+  }, 0);
+  var avg = sum / scores.length;
+  std = standardDeviation(scores);
+  console.log(scores);
+  console.log(avg);
+  console.log(std);
+  console.log(avg + 2*std);
+  function getColor(d) {
+    return d > (avg + 2*std) ? '#4FDE02' :
+        d > (avg + std) ? '#A0EB15' :
+        d > (avg - std) ? '#E9D00E' :
+        d > (avg - 2*std) ? '#E76607' :
+        '#EC0803';
+  };
+  filteredLayer.eachLayer(function(layer){
+    var color = getColor(layer.feature.properties.score);
+    layer.setStyle({
+      fillColor: color,
+      weight: 1,
+      // dashArray: '3 10',
+      // opacity: 0,
+      color: "black",
+      // dashArray: '3',
+      fillOpacity: 0.75
+    });
+  });
   // filteredLayer = L.geoJSON(FC, {
   //   onEachFeature: onEachFeature,
   // });
@@ -383,10 +432,10 @@ function updateMap() {
   //   // dashArray: '3',
   //   fillOpacity: 0.75
   // });
-  console.log(maxScore);
-  console.log(minScore);
+  // console.log(maxScore);
+  // console.log(minScore);
   filteredLayer.addTo(map);
 };
 //first map populated!
 updateMap();
-console.log(filteredLayer);
+// console.log(filteredLayer);
