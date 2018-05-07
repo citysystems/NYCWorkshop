@@ -94,6 +94,10 @@ function onEachFeature(feature, layer) {
   //marginal transit calc: -ln0.1/t(minutes)
   var marginalTransitW = [((Math.log(0.1))/($("#walkMVal").val())), ((Math.log(0.1))/($("#bikeMVal").val())), ((Math.log(0.1))/($("#transitMVal").val())),
   ((Math.log(0.1))/($("#transitMVal").val()))];
+  console.log(absoluteAmenW);
+  console.log(marginalAmenW);
+  console.log(absoluteTransitW);
+  console.log(marginalTransitW);
   parcel = layer.feature.properties.ID;
   score = 0;
   //marginal good implementation = total transit score * MarginalAmenW(given type)^"rank"
@@ -283,10 +287,10 @@ var legend = L.control({
     position: 'topright'
 });
 function getColor(d) {
-  return d < 1 ? '#4FDE02' :
-      d < 5 ? '#A0EB15' :
-      d < 10 ? '#E9D00E' :
-      d < 20 ? '#E76607' :
+  return d > 220 ? '#4FDE02' :
+      d > 204 ? '#A0EB15' :
+      d > 172 ? '#E9D00E' :
+      d > 156 ? '#E76607' :
       '#EC0803';
 };
 legend.onAdd = function(map) {
